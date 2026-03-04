@@ -7,17 +7,35 @@
     <style>
         body {
             margin: 0;
-            min-height: 100vh;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: rgb(90, 4, 12);
             text-align: center;
+            overflow: hidden;
         }
 
         /* Responsive video container */
-        .responsive-video { position: relative; width: 90%; max-width: 900px; padding-bottom: 56.25%; height: 0; overflow: hidden; }
-        .responsive-video video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; border-radius: 10px; }
+        .responsive-video { 
+            position: relative; 
+            width: 100%; 
+            height: 100%; 
+            max-width: 100vw;
+            max-height: 100vh;
+            overflow: hidden;
+        }
+        .responsive-video video { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            display: block; 
+            object-fit: cover;
+        }
 
         /* Make the video element clearly interactive for touch/keyboard */
         #videoSticker { cursor: pointer; outline: none; }
@@ -73,4 +91,3 @@
     </script>
 </body>
 </html>
-
