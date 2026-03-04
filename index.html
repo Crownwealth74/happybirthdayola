@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Video</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(90, 4, 12);
+            text-align: center;
+        }
+
+        /* Responsive video container */
+        .responsive-video { position: relative; width: 90%; max-width: 900px; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+        .responsive-video video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; border-radius: 10px; }
+
+        /* Make the video element clearly interactive for touch/keyboard */
+        #videoSticker { cursor: pointer; outline: none; }
+        #videoSticker:focus { box-shadow: 0 0 0 3px rgba(255,64,129,0.5); }
+        #videoSticker:hover { opacity: 0.95; box-shadow: 0 0 20px rgba(255, 64, 129, 0.6); }
+
+        /* Ensure tappable targets and readable text on small screens */
+        button, a, video { min-height: 44px; min-width: 44px; }
+        html { font-size: 16px; }
+        @media (max-width: 480px) { html { font-size: 15px; } }
+
+        /* Screen-reader only text */
+        .sr-only { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+    </style>
+</head>
+<body>
+    <div class="responsive-video" role="region" aria-label="Birthday video">
+        <video id="videoSticker" autoplay muted controls preload="metadata" tabindex="0" aria-describedby="video-transcript">
+            <source src="vecteezy_animated-birthday-wishes-handwriting-with-ink-drop-happy_16090923.mp4" type="video/mp4">
+            <track kind="captions" srclang="en" label="English" src="captions_en.vtt">
+            Your browser does not support the video tag. Full transcript: <a href="transcript.html">Transcript</a>
+        </video>
+        <!-- optional external audio that plays alongside the video -->
+        <audio id="videoAudio" src="audio.mp3" preload="auto"></audio>
+    </div>
+    <p id="video-transcript" class="sr-only">Transcript available at the linked transcript page.</p>
+
+    <script>
+        const video = document.getElementById("videoSticker");
+
+        // Click or keyboard activation goes to main page
+        function goToMain() { window.location.href = "main.html"; }
+
+        video.addEventListener("click", goToMain);
+        video.addEventListener("ended", goToMain);
+
+        // optional external audio that mirrors the video
+        const extraAudio = document.getElementById('videoAudio');
+        if (extraAudio) {
+            video.addEventListener('play', () => { extraAudio.currentTime = 0; extraAudio.play(); });
+            video.addEventListener('pause', () => { extraAudio.pause(); });
+            video.addEventListener('ended', () => { extraAudio.pause(); });
+        }
+
+        // Make Enter/Space activate the video click behaviour for keyboard users
+        video.addEventListener("keydown", function(e) {
+            const key = e.key || e.keyCode;
+            if (key === 'Enter' || key === ' ' || key === 13 || key === 32) {
+                e.preventDefault();
+                goToMain();
+            }
+        });
+    </script>
+</body>
+</html>

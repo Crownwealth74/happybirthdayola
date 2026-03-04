@@ -1,0 +1,103 @@
+body{
+    margin: 0px;
+    height: 100vh;
+    background-color: rgb(90, 4, 12);
+
+}
+
+.image img{
+    position:relative;
+    top: 100px;
+    left: 20px;
+    width: 45vw;
+    border-radius: 10px;
+}
+
+.countdown{
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    margin: 60px;
+    height: 60vh;
+}
+
+.content{
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.content h1{
+    color: rgb(252, 253, 253);
+    font-family: cursive;
+    
+}
+.content h4{
+    margin: 0%;
+    color: rgb(243, 236, 236);
+}
+
+.content p{
+
+    font-size: larger;
+    padding-right: 30px;
+    color: wheat;
+}
+
+.count{
+    display: flex;
+    flex-direction: row;
+    gap: 40px ;
+}
+
+.time{
+    background-color: rgb(107, 10, 10);
+    width: 120px;
+    height: 100px;
+}
+
+.time p{
+    
+    text-align: center;
+    font-size: 35px;
+    font-family: cursive;
+    color: rgb(236, 220, 236);
+    margin: 0px;
+
+}
+
+.time h1{
+    margin: 0px;
+    color: rgb(230, 224, 230);
+    text-align: center;
+}
+
+.hearts{
+    text-align: center;
+    color: white;
+    font-size: 30px;
+}
+body {
+  text-align: center;
+  background-color: #4b0202;
+  font-family: 'Comic Sans MS', cursive;
+}
+
+.hidden {
+  display: none;
+}
+
+#countdown {
+  font-size: 2em;
+  margin-top: 30px;
+  color: #ff4081;
+  font-weight: bold;
+}
+
+/* Accessibility helpers for responsive video and touch targets */
+.responsive-video { position: relative; width: 90%; max-width: 900px; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 0 auto; }
+.responsive-video video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; border-radius: 10px; }
+.sr-only { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+button, a, video { min-height: 44px; min-width: 44px; }
+html { font-size: 16px; }
+@media (max-width: 480px) { html { font-size: 15px; } }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
+</head>
+<body>
+        <div class="countdown">
+           <div class="image">
+            <img id="birthdayImage" src="images.jpeg" style="width: 500px; display: block; margin:auto" alt="Birthday picture"/>
+            <!-- click sound for the image -->
+            <audio id="clickSound" src="click.mp3" preload="auto"></audio>
+        </div>
+        <div class="content">
+            <h1>HAPPY BIRTHDAY GIRLLLLL </h1>
+            <h4>ITS HER BIRTHDAY on the 14 MARCH, 2026</h4>
+            <p>Time is ticking, and the excitement is building!</p>
+            <P> We’re counting down the days, hours, minutes, and seconds until the big celebration.</P>
+            <p>Every tick brings us closer to laughter, cake, and unforgettable memories.</p>
+            <P>Get ready — the birthday magic begins when the timer hits zero!</P>
+
+            <div class="count">
+                <div class="time">
+                    <p id="days"></p>
+                    <h1>Days</h1>
+                </div>
+                <div class="time">
+                    <p id="hours"></p>
+                    <h1>Hours</h1>
+                </div>
+                <div class="time">
+                    <p id="mins"></p>
+                    <h1>Mins</h1>
+                </div>
+                <div class="time">
+                    <p id="secs"></p>
+                    <h1>Secs</h1>
+                </div> 
+                <h1 id="end"></h1>
+            </div>
+            
+        </div> 
+        </div>
+        <p class="hearts">I <span style="font-size:150%;color:red;">&hearts;</span> OLAMIDE</p>
+
+        <!-- background music that starts when page loads -->
+        <audio id="bgMusic" src="happybirthday.mp3" loop preload="auto"></audio>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
