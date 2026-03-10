@@ -1,6 +1,6 @@
 body{
     margin: 0px;
-    height: 100vh;
+    min-height: 100vh;
     background-color: rgb(90, 4, 12);
 
 }
@@ -73,9 +73,11 @@ body{
 }
 
 .hearts{
+    margin-top: 20px;
     text-align: center;
     color: white;
-    font-size: 30px;
+    font-size: 50px;
+    font-weight: bold;
 }
 body {
   text-align: center;
@@ -100,4 +102,70 @@ body {
 .sr-only { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
 button, a, video { min-height: 44px; min-width: 44px; }
 html { font-size: 16px; }
-@media (max-width: 480px) { html { font-size: 15px; } }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .countdown {
+    flex-direction: column;
+    gap: 20px;
+    margin: 10px;
+    height: auto;
+  }
+
+  .image img {
+    position: static;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .content {
+    padding-top: 20px;
+  }
+
+  .content h1 {
+    font-size: 24px;
+  }
+
+  .content h4 {
+    font-size: 14px;
+  }
+
+  .content p {
+    font-size: 12px;
+    padding-right: 0;
+  }
+
+  .count {
+    gap: 5px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .time {
+    flex: 1;
+    min-width: 60px;
+    width: auto;
+    height: 60px;
+  }
+
+  .time p {
+    font-size: 20px;
+  }
+
+  .time h1 {
+    font-size: 10px;
+  }
+
+  .hearts {
+    font-size: 28px;
+  }
+
+  body {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+  }
+}
