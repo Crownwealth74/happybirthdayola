@@ -59,7 +59,7 @@
             Your browser does not support the video tag. Full transcript: <a href="transcript.html">Transcript</a>
         </video>
         <!-- optional external audio that plays alongside the video -->
-        <audio id="videoAudio" src="audio.mp3" preload="auto"></audio>
+        <!-- <audio id="videoAudio" src="audio.mp3" preload="auto"></audio> -->
     </div>
     <p id="video-transcript" class="sr-only">Transcript available at the linked transcript page.</p>
 
@@ -73,12 +73,12 @@
         video.addEventListener("ended", goToMain);
 
         // optional external audio that mirrors the video
-        const extraAudio = document.getElementById('videoAudio');
-        if (extraAudio) {
-            video.addEventListener('play', () => { extraAudio.currentTime = 0; extraAudio.play(); });
-            video.addEventListener('pause', () => { extraAudio.pause(); });
-            video.addEventListener('ended', () => { extraAudio.pause(); });
-        }
+        // const extraAudio = document.getElementById('videoAudio');
+        // if (extraAudio) {
+        //     video.addEventListener('play', () => { extraAudio.currentTime = 0; extraAudio.play(); });
+        //     video.addEventListener('pause', () => { extraAudio.pause(); });
+        //     video.addEventListener('ended', () => { extraAudio.pause(); });
+        // }
 
         // Make Enter/Space activate the video click behaviour for keyboard users
         video.addEventListener("keydown", function(e) {
