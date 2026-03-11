@@ -37,13 +37,9 @@
             object-fit: cover;
         }
 
-        /* Make the video element clearly interactive for touch/keyboard */
-        #videoSticker { cursor: pointer; outline: none; }
-        #videoSticker:focus { box-shadow: 0 0 0 3px rgba(255,64,129,0.5); }
-        #videoSticker:hover { opacity: 0.95; box-shadow: 0 0 20px rgba(255, 64, 129, 0.6); }
+        /* Video plays inline - no interaction needed */
+        #videoSticker { cursor: pointer; outline: none; pointer-events: none; }
 
-        /* Ensure tappable targets and readable text on small screens */
-        button, a, video { min-height: 44px; min-width: 44px; }
         html { font-size: 16px; }
         @media (max-width: 480px) { html { font-size: 15px; } }
 
@@ -53,10 +49,9 @@
 </head>
 <body>
     <div class="responsive-video" role="region" aria-label="Birthday video">
-        <video id="videoSticker" autoplay muted controls preload="metadata" tabindex="0" aria-describedby="video-transcript">
+        <video id="videoSticker" autoplay muted playsinline preload="auto" tabindex="0" aria-describedby="video-transcript">
             <source src="vecteezy_animated-birthday-wishes-handwriting-with-ink-drop-happy_16090923.mp4" type="video/mp4">
-            <track kind="captions" srclang="en" label="English" src="captions_en.vtt">
-            Your browser does not support the video tag. Full transcript: <a href="transcript.html">Transcript</a>
+            Your browser does not support the video tag.
         </video>
         <!-- optional external audio that plays alongside the video -->
         <!-- <audio id="videoAudio" src="audio.mp3" preload="auto"></audio> -->
@@ -66,28 +61,29 @@
     <script>
         const video = document.getElementById("videoSticker");
 
-        // Click or keyboard activation goes to main page
-        function goToMain() { window.location.href = "main.html"; }
-
-        video.addEventListener("click", goToMain);
-        video.addEventListener("ended", goToMain);
-
-        // optional external audio that mirrors the video
-        // const extraAudio = document.getElementById('videoAudio');
-        // if (extraAudio) {
-        //     video.addEventListener('play', () => { extraAudio.currentTime = 0; extraAudio.play(); });
-        //     video.addEventListener('pause', () => { extraAudio.pause(); });
-        //     video.addEventListener('ended', () => { extraAudio.pause(); });
-        // }
-
-        // Make Enter/Space activate the video click behaviour for keyboard users
-        video.addEventListener("keydown", function(e) {
-            const key = e.key || e.keyCode;
-            if (key === 'Enter' || key === ' ' || key === 13 || key === 32) {
-                e.preventDefault();
-                goToMain();
-            }
+        // Navigate to main page when video ends
+        video.addEventListener("ended", function() {
+            window.location.href = "main.html";
         });
+
+        // Ensure autoplay works on mobile - retry if blocked
+        function tryPlay() {
+            video.play().catch(function() {
+                // If autoplay is blocked, listen for first touch to start
+                document.addEventListener("touchstart", function handler() {
+                    video.play();
+                    document.removeEventListener("touchstart", handler);
+                }, { once: true });
+                document.addEventListener("click", function handler() {
+                    video.play();
+                    document.removeEventListener("click", handler);
+                }, { once: true });
+            });
+        }
+
+        // Try playing immediately and also on load
+        tryPlay();
+        window.addEventListener("load", tryPlay);
     </script>
 </body>
 </html>
