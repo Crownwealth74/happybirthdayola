@@ -19,28 +19,83 @@
         }
 
         /* Responsive video container */
-        .responsive-video { 
-            position: relative; 
-            width: 100%; 
-            height: 100%; 
+        .responsive-video {
+            position: relative;
+            width: 100%;
+            height: 100%;
             max-width: 100vw;
             max-height: 100vh;
             overflow: hidden;
         }
-        .responsive-video video { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            display: block; 
+        .responsive-video video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
             object-fit: cover;
         }
 
         /* Make the video element clearly interactive for touch/keyboard */
         #videoSticker { cursor: pointer; outline: none; }
         #videoSticker:focus { box-shadow: 0 0 0 3px rgba(255,64,129,0.5); }
-        #videoSticker:hover { opacity: 0.95; box-shadow: 0 0 20px rgba(255, 64, 129, 0.6); }
+
+        /* Play overlay shown when autoplay fails */
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(90, 4, 12, 0.7);
+            z-index: 10;
+            cursor: pointer;
+        }
+        .play-overlay.hidden { display: none; }
+        .play-btn {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 64, 129, 0.9);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .play-btn::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 18px 0 18px 30px;
+            border-color: transparent transparent transparent white;
+            margin-left: 5px;
+        }
+
+        /* Skip button */
+        .skip-btn {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            z-index: 20;
+            background: rgba(255, 64, 129, 0.8);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-family: 'Comic Sans MS', cursive;
+            cursor: pointer;
+            min-height: 44px;
+            min-width: 44px;
+        }
+        .skip-btn:hover, .skip-btn:focus { background: rgba(255, 64, 129, 1); }
 
         /* Ensure tappable targets and readable text on small screens */
         button, a, video { min-height: 44px; min-width: 44px; }
@@ -53,39 +108,69 @@
 </head>
 <body>
     <div class="responsive-video" role="region" aria-label="Birthday video">
-        <video id="videoSticker" autoplay muted controls preload="metadata" tabindex="0" aria-describedby="video-transcript">
+        <video id="videoSticker" autoplay muted playsinline preload="auto" tabindex="0" aria-describedby="video-transcript">
             <source src="vecteezy_animated-birthday-wishes-handwriting-with-ink-drop-happy_16090923.mp4" type="video/mp4">
-            <track kind="captions" srclang="en" label="English" src="captions_en.vtt">
-            Your browser does not support the video tag. Full transcript: <a href="transcript.html">Transcript</a>
+            Your browser does not support the video tag.
         </video>
-        <!-- optional external audio that plays alongside the video -->
-        <!-- <audio id="videoAudio" src="audio.mp3" preload="auto"></audio> -->
+
+        <!-- Tap-to-play overlay shown when autoplay fails on mobile -->
+        <div id="playOverlay" class="play-overlay hidden" role="button" aria-label="Tap to play birthday video" tabindex="0">
+            <div class="play-btn"></div>
+        </div>
+
+        <!-- Skip button to go directly to main page -->
+        <button class="skip-btn" id="skipBtn" aria-label="Skip video">Skip &raquo;</button>
     </div>
-    <p id="video-transcript" class="sr-only">Transcript available at the linked transcript page.</p>
+    <p id="video-transcript" class="sr-only">Birthday wishes animation video.</p>
 
     <script>
         const video = document.getElementById("videoSticker");
+        const playOverlay = document.getElementById("playOverlay");
+        const skipBtn = document.getElementById("skipBtn");
 
-        // Click or keyboard activation goes to main page
         function goToMain() { window.location.href = "main.html"; }
 
-        video.addEventListener("click", goToMain);
+        // When video ends, go to main page
         video.addEventListener("ended", goToMain);
 
-        // optional external audio that mirrors the video
-        // const extraAudio = document.getElementById('videoAudio');
-        // if (extraAudio) {
-        //     video.addEventListener('play', () => { extraAudio.currentTime = 0; extraAudio.play(); });
-        //     video.addEventListener('pause', () => { extraAudio.pause(); });
-        //     video.addEventListener('ended', () => { extraAudio.pause(); });
-        // }
+        // Skip button always navigates to main
+        skipBtn.addEventListener("click", goToMain);
 
-        // Make Enter/Space activate the video click behaviour for keyboard users
-        video.addEventListener("keydown", function(e) {
-            const key = e.key || e.keyCode;
-            if (key === 'Enter' || key === ' ' || key === 13 || key === 32) {
+        // Try to play the video; if autoplay is blocked, show the play overlay
+        var playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise.then(function() {
+                // Autoplay worked — hide overlay
+                playOverlay.classList.add("hidden");
+            }).catch(function() {
+                // Autoplay blocked — show tap-to-play overlay
+                playOverlay.classList.remove("hidden");
+            });
+        }
+
+        // When user taps the play overlay, start the video
+        function startVideo() {
+            playOverlay.classList.add("hidden");
+            video.play();
+        }
+
+        playOverlay.addEventListener("click", startVideo);
+        playOverlay.addEventListener("keydown", function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                goToMain();
+                startVideo();
+            }
+        });
+
+        // Keyboard support on video element
+        video.addEventListener("keydown", function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                if (video.paused) {
+                    video.play();
+                } else {
+                    goToMain();
+                }
             }
         });
     </script>
