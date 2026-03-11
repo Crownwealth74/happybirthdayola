@@ -7,35 +7,17 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
-            height: 100vh;
-            width: 100vw;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: rgb(90, 4, 12);
             text-align: center;
-            overflow: hidden;
         }
 
         /* Responsive video container */
-        .responsive-video { 
-            position: relative; 
-            width: 100%; 
-            height: 100%; 
-            max-width: 100vw;
-            max-height: 100vh;
-            overflow: hidden;
-        }
-        .responsive-video video { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            display: block; 
-            object-fit: cover;
-        }
+        .responsive-video { position: relative; width: 90%; max-width: 900px; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+        .responsive-video video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; border-radius: 10px; }
 
         /* Make the video element clearly interactive for touch/keyboard */
         #videoSticker { cursor: pointer; outline: none; }
@@ -59,7 +41,7 @@
             Your browser does not support the video tag. Full transcript: <a href="transcript.html">Transcript</a>
         </video>
         <!-- optional external audio that plays alongside the video -->
-        <!-- <audio id="videoAudio" src="audio.mp3" preload="auto"></audio> -->
+        <audio id="videoAudio" src="audio.mp3" preload="auto"></audio>
     </div>
     <p id="video-transcript" class="sr-only">Transcript available at the linked transcript page.</p>
 
@@ -73,12 +55,12 @@
         video.addEventListener("ended", goToMain);
 
         // optional external audio that mirrors the video
-        // const extraAudio = document.getElementById('videoAudio');
-        // if (extraAudio) {
-        //     video.addEventListener('play', () => { extraAudio.currentTime = 0; extraAudio.play(); });
-        //     video.addEventListener('pause', () => { extraAudio.pause(); });
-        //     video.addEventListener('ended', () => { extraAudio.pause(); });
-        // }
+        const extraAudio = document.getElementById('videoAudio');
+        if (extraAudio) {
+            video.addEventListener('play', () => { extraAudio.currentTime = 0; extraAudio.play(); });
+            video.addEventListener('pause', () => { extraAudio.pause(); });
+            video.addEventListener('ended', () => { extraAudio.pause(); });
+        }
 
         // Make Enter/Space activate the video click behaviour for keyboard users
         video.addEventListener("keydown", function(e) {
@@ -91,4 +73,3 @@
     </script>
 </body>
 </html>
-
