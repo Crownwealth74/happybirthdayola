@@ -42,28 +42,6 @@
         #videoSticker:focus { box-shadow: 0 0 0 3px rgba(255,64,129,0.5); }
         #videoSticker:hover { opacity: 0.95; box-shadow: 0 0 20px rgba(255, 64, 129, 0.6); }
 
-        /* Loading indicator */
-        .video-loader {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: none;
-            z-index: 10;
-        }
-        .video-loader.active {
-            display: block;
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #ff4081;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
         /* Ensure tappable targets and readable text on small screens */
         button, a, video { min-height: 44px; min-width: 44px; }
         html { font-size: 16px; }
@@ -75,17 +53,11 @@
 </head>
 <body>
     <div class="responsive-video" role="region" aria-label="Birthday video">
-        <video id="videoSticker" autoplay muted controls preload="metadata" poster="thumbnail.jpg" tabindex="0" aria-describedby="video-transcript">
-            <!-- Mobile optimized version (lower bitrate) -->
-            <source src="vecteezy_birthday_mobile.mp4" type="video/mp4" media="(max-width: 768px)">
-            <!-- Desktop version -->
+        <video id="videoSticker" autoplay muted controls preload="metadata" tabindex="0" aria-describedby="video-transcript">
             <source src="vecteezy_animated-birthday-wishes-handwriting-with-ink-drop-happy_16090923.mp4" type="video/mp4">
-            <!-- WEBM format as fallback (more efficient) -->
-            <source src="vecteezy_birthday.webm" type="video/webm">
             <track kind="captions" srclang="en" label="English" src="captions_en.vtt">
             Your browser does not support the video tag. Full transcript: <a href="transcript.html">Transcript</a>
         </video>
-        <div class="video-loader" id="videoLoader"></div>
         <!-- optional external audio that plays alongside the video -->
         <!-- <audio id="videoAudio" src="audio.mp3" preload="auto"></audio> -->
     </div>
@@ -93,12 +65,6 @@
 
     <script>
         const video = document.getElementById("videoSticker");
-        const loader = document.getElementById("videoLoader");
-
-        // Show loader while buffering or loading
-        video.addEventListener("waiting", () => loader.classList.add("active"));
-        video.addEventListener("playing", () => loader.classList.remove("active"));
-        video.addEventListener("play", () => loader.classList.remove("active"));
 
         // Click or keyboard activation goes to main page
         function goToMain() { window.location.href = "main.html"; }
