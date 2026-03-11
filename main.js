@@ -54,32 +54,10 @@ function startCountdown() {
 startCountdown();
 
 // play background music when page loads (will be blocked by browsers until user interaction)
-let musicPlayed = false;
 window.addEventListener('load', () => {
   const bg = document.getElementById('bgMusic');
   if (bg) {
     bg.play().catch(()=>{/* autoplay prevented; will play on first interaction */});
-  }
-});
-
-// play music on first user interaction
-document.addEventListener('click', () => {
-  if (!musicPlayed) {
-    const bg = document.getElementById('bgMusic');
-    if (bg) {
-      bg.play();
-      musicPlayed = true;
-    }
-  }
-});
-
-document.addEventListener('keydown', () => {
-  if (!musicPlayed) {
-    const bg = document.getElementById('bgMusic');
-    if (bg) {
-      bg.play();
-      musicPlayed = true;
-    }
   }
 });
 
@@ -95,8 +73,7 @@ if (img) {
 // the redirect listener should only be attached on video page
 const vid = document.getElementById("videoSticker");
 if (vid) {
-  vid.addEventListener("ended", () => {
-    window.location.href = "main.html"; // go to second page after video finishes
+  vid.addEventListener("click", () => {
+    window.location.href = "main.html"; // go to second page
   });
 }
-
